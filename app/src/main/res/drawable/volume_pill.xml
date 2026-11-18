@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
-    <solid android:color="#e61e1e1e"/>
-    <corners android:radius="24dp"/>
+<!-- The volume pill background: the player's panel colour at 90 per cent
+     opacity, corner radius half the 48dp height. -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <solid android:color="#E61E1E1E" />
+    <corners android:radius="24dp" />
 </shape>

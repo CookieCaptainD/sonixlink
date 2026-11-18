@@ -1,120 +1,145 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:background="@color/screen_bg"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/screen_bg">
+
+    <!-- Visible only inside an opened category. -->
     <LinearLayout
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
         android:id="@+id/header"
-        android:background="@color/surface"
-        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:minHeight="44dp">
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:background="@color/surface"
+        android:minHeight="44dp"
+        android:visibility="gone">
+
         <ImageButton
             android:id="@+id/headerBack"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:layout_width="44dp"
             android:layout_height="44dp"
             android:src="@drawable/ic_back"
-            android:tint="@color/text_primary"
-            android:contentDescription="@string/cd_back"/>
+            android:contentDescription="@string/cd_back"
+            android:tint="@color/text_primary" />
+
         <TextView
-            android:textSize="16sp"
-            android:textColor="@color/text_primary"
-            android:ellipsize="end"
             android:id="@+id/headerTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:maxLines="1"
             android:layout_weight="1"
-            android:paddingStart="8dp"/>
+            android:paddingStart="8dp"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:textColor="@color/text_primary"
+            android:textSize="16sp" />
+
+        <!-- The corner buttons of the title row, as on the player: circle-play
+             where playing the whole list applies, and the selection-mode
+             actions. The code shows only those the list uses. -->
         <ImageButton
             android:id="@+id/selQueue"
+            style="@style/CornerButton"
             android:src="@drawable/ic_list_queue"
-            android:contentDescription="@string/sel_queue"
-            style="@style/CornerButton"/>
+            android:contentDescription="@string/sel_queue" />
+
         <ImageButton
             android:id="@+id/selFavAdd"
+            style="@style/CornerButton"
             android:src="@drawable/ic_star_plus"
-            android:contentDescription="@string/sel_fav_add"
-            style="@style/CornerButton"/>
+            android:contentDescription="@string/sel_fav_add" />
+
         <ImageButton
             android:id="@+id/selPlaylistAdd"
+            style="@style/CornerButton"
             android:src="@drawable/ic_list_plus"
-            android:contentDescription="@string/sel_playlist_add"
-            style="@style/CornerButton"/>
+            android:contentDescription="@string/sel_playlist_add" />
+
         <ImageButton
             android:id="@+id/selFavRemove"
+            style="@style/CornerButton"
             android:src="@drawable/ic_star_x"
-            android:contentDescription="@string/sel_fav_remove"
-            style="@style/CornerButton"/>
+            android:contentDescription="@string/sel_fav_remove" />
+
         <ImageButton
             android:id="@+id/selPlaylistRemove"
+            style="@style/CornerButton"
             android:src="@drawable/ic_list_x"
-            android:contentDescription="@string/sel_playlist_remove"
-            style="@style/CornerButton"/>
+            android:contentDescription="@string/sel_playlist_remove" />
+
         <ImageButton
             android:id="@+id/selClose"
+            style="@style/CornerButton"
             android:src="@drawable/ic_close"
-            android:contentDescription="@string/cd_close"
-            style="@style/CornerButton"/>
+            android:contentDescription="@string/cd_close" />
+
         <ImageButton
             android:id="@+id/playMenu"
+            style="@style/CornerButton"
             android:src="@drawable/ic_circle_play"
-            android:contentDescription="@string/cd_play_menu"
-            style="@style/CornerButton"/>
+            android:contentDescription="@string/cd_play_menu" />
     </LinearLayout>
+
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/list"
-            android:scrollbars="none"
-            android:clipToPadding="false"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:scrollbars="none" />
+
+        <!-- The letter index, filled in code with only the letters present in
+             the list. -->
         <LinearLayout
-            android:gravity="center"
+            android:id="@+id/letterStrip"
+            android:layout_width="26dp"
+            android:layout_height="match_parent"
             android:layout_gravity="end"
             android:orientation="vertical"
-            android:id="@+id/letterStrip"
+            android:gravity="center"
             android:paddingTop="4dp"
             android:paddingBottom="4dp"
-            android:visibility="gone"
-            android:layout_width="26dp"
-            android:layout_height="match_parent"/>
+            android:visibility="gone" />
+
+        <!-- The letter under the finger, shown large in the middle because the
+             finger covers the strip. Its accent disc is set in code. -->
         <FrameLayout
-            android:layout_gravity="center"
             android:id="@+id/indexHint"
-            android:visibility="gone"
             android:layout_width="132dp"
-            android:layout_height="124dp">
+            android:layout_height="124dp"
+            android:layout_gravity="center"
+            android:visibility="gone">
+
             <TextView
-                android:textSize="56sp"
-                android:textStyle="bold"
-                android:textColor="#ffffffff"
-                android:layout_gravity="center"
                 android:id="@+id/indexHintLetter"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textColor="#FFFFFFFF"
+                android:textSize="56sp"
+                android:textStyle="bold" />
         </FrameLayout>
+
         <TextView
-            android:textColor="@color/text_secondary"
-            android:layout_gravity="center"
             android:id="@+id/emptyText"
-            android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/empty_list"/>
-        <ProgressBar
             android:layout_gravity="center"
+            android:text="@string/empty_list"
+            android:textColor="@color/text_secondary"
+            android:visibility="gone" />
+
+        <ProgressBar
             android:id="@+id/progress"
-            android:visibility="gone"
             android:layout_width="32dp"
-            android:layout_height="32dp"/>
+            android:layout_height="32dp"
+            android:layout_gravity="center"
+            android:visibility="gone" />
     </FrameLayout>
 </LinearLayout>

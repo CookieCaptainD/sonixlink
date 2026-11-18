@@ -1,126 +1,150 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- The search page, as on the player: the field with a clear button at the
+     top, and the results below, grouped by category. -->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <LinearLayout
-        android:orientation="vertical"
-        android:background="@color/screen_bg"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/screen_bg">
+
         <LinearLayout
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingTop="6dp"
-            android:paddingBottom="6dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
             android:paddingStart="4dp"
-            android:paddingEnd="12dp">
+            android:paddingEnd="12dp"
+            android:paddingTop="6dp"
+            android:paddingBottom="6dp">
+
             <ImageButton
                 android:id="@+id/backButton"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:layout_width="44dp"
                 android:layout_height="44dp"
                 android:src="@drawable/ic_back"
-                android:tint="@color/text_primary"
-                android:contentDescription="@string/cd_back"/>
+                android:contentDescription="@string/cd_back"
+                android:tint="@color/text_primary" />
+
             <EditText
-                android:textSize="17sp"
-                android:textColor="@color/text_primary"
-                android:textColorHint="@color/text_secondary"
                 android:id="@+id/searchInput"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:hint="@string/search_hint"
-                android:maxLines="1"
                 android:layout_weight="1"
+                android:hint="@string/search_hint"
+                android:importantForAutofill="no"
                 android:inputType="text"
                 android:imeOptions="actionSearch"
-                android:importantForAutofill="no"/>
+                android:maxLines="1"
+                android:textColor="@color/text_primary"
+                android:textColorHint="@color/text_secondary"
+                android:textSize="17sp" />
+
             <ImageButton
                 android:id="@+id/clearButton"
                 android:background="?attr/selectableItemBackgroundBorderless"
-                android:visibility="gone"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:src="@drawable/ic_close"
+                android:contentDescription="@string/cd_close"
                 android:tint="@color/text_secondary"
-                android:contentDescription="@string/cd_close"/>
+                android:visibility="gone" />
         </LinearLayout>
+
+        <!-- The title row: the open album or artist, or in selection mode the
+             count and what can be done with the chosen rows. -->
         <LinearLayout
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
             android:id="@+id/header"
-            android:background="@color/surface"
-            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:minHeight="44dp">
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:background="@color/surface"
+            android:minHeight="44dp"
+            android:visibility="gone">
+
             <ImageButton
                 android:id="@+id/headerBack"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:layout_width="44dp"
                 android:layout_height="44dp"
                 android:src="@drawable/ic_back"
-                android:tint="@color/text_primary"
-                android:contentDescription="@string/cd_back"/>
+                android:contentDescription="@string/cd_back"
+                android:tint="@color/text_primary" />
+
             <TextView
-                android:textSize="16sp"
-                android:textColor="@color/text_primary"
-                android:ellipsize="end"
                 android:id="@+id/headerTitle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:maxLines="1"
                 android:layout_weight="1"
-                android:paddingStart="8dp"/>
+                android:paddingStart="8dp"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:textColor="@color/text_primary"
+                android:textSize="16sp" />
+
+            <!-- Selection mode's corner buttons, as in the library tabs. -->
             <ImageButton
                 android:id="@+id/selQueue"
+                style="@style/CornerButton"
                 android:src="@drawable/ic_list_queue"
-                android:contentDescription="@string/sel_queue"
-                style="@style/CornerButton"/>
+                android:contentDescription="@string/sel_queue" />
+
             <ImageButton
                 android:id="@+id/selFavAdd"
+                style="@style/CornerButton"
                 android:src="@drawable/ic_star_plus"
-                android:contentDescription="@string/sel_fav_add"
-                style="@style/CornerButton"/>
+                android:contentDescription="@string/sel_fav_add" />
+
             <ImageButton
                 android:id="@+id/selFavRemove"
+                style="@style/CornerButton"
                 android:src="@drawable/ic_star_x"
-                android:contentDescription="@string/sel_fav_remove"
-                style="@style/CornerButton"/>
+                android:contentDescription="@string/sel_fav_remove" />
+
             <ImageButton
                 android:id="@+id/selPlaylistAdd"
+                style="@style/CornerButton"
                 android:src="@drawable/ic_list_plus"
-                android:contentDescription="@string/sel_playlist_add"
-                style="@style/CornerButton"/>
+                android:contentDescription="@string/sel_playlist_add" />
+
             <ImageButton
                 android:id="@+id/selClose"
+                style="@style/CornerButton"
                 android:src="@drawable/ic_close"
-                android:contentDescription="@string/cd_close"
-                style="@style/CornerButton"/>
+                android:contentDescription="@string/cd_close" />
         </LinearLayout>
+
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1">
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/list"
-                android:scrollbars="vertical"
-                android:clipToPadding="false"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent"
+                android:clipToPadding="false"
+                android:scrollbars="vertical" />
+
             <TextView
-                android:textColor="@color/text_secondary"
-                android:layout_gravity="center"
                 android:id="@+id/emptyText"
-                android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/search_nothing"/>
+                android:layout_gravity="center"
+                android:text="@string/search_nothing"
+                android:textColor="@color/text_secondary"
+                android:visibility="gone" />
         </FrameLayout>
     </LinearLayout>
+
+    <!-- The volume pill, shown when the volume keys change the player's
+         volume. -->
     <include
         android:id="@+id/volume"
-        layout="@layout/volume_pill"/>
+        layout="@layout/volume_pill" />
 </FrameLayout>

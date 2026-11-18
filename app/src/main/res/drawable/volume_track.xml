@@ -1,22 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- The volume track: thin and rounded, white at 20 per cent opacity, with
+     the fill in the accent. The player's 10 px on a 480-wide screen scales to
+     a few dp on a phone.
+
+     The height is set on the <item>: ProgressBar ignores a <shape>'s size and
+     stretches the drawable to its own full height. -->
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:gravity="center_vertical"
         android:id="@android:id/background"
+        android:gravity="center_vertical"
         android:height="6dp">
         <shape android:shape="rectangle">
-            <corners android:radius="3dp"/>
-            <solid android:color="#33ffffff"/>
+            <corners android:radius="3dp" />
+            <solid android:color="#33FFFFFF" />
         </shape>
     </item>
     <item
-        android:gravity="center_vertical"
         android:id="@android:id/progress"
+        android:gravity="center_vertical"
         android:height="6dp">
         <clip>
             <shape android:shape="rectangle">
-                <corners android:radius="3dp"/>
-                <solid android:color="@color/accent"/>
+                <corners android:radius="3dp" />
+                <solid android:color="@color/accent" />
             </shape>
         </clip>
     </item>
