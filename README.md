@@ -1,6 +1,14 @@
-# SonixLink — Recuperação de código-fonte
+# SonixLink — Sucessor do projeto original
 
-> Recuperação / engenharia inversa de um APK de um projeto desaparecido da internet.
+> **Este repositório é o sucessor do projeto original SonixLink**, criado por Mattia Doronzo
+> (inferido a partir do package `com.mattiadoronzo.sonixlink`). O projeto original desapareceu
+> da internet; este repo conserva e continua o seu código a partir da última versão conhecida
+> do APK (v1.2), com o objetivo de o recuperar, documentar e manter vivo.
+>
+> **Não é uma continuação oficial nem endossada pelo autor original.** É um esforço de
+> preservação comunitária: se o projeto original reaparecer ou uma licença for encontrada,
+> a atribuição e a licença devem ser ajustadas em conformidade.
+>
 > **Estado:** código descompilado e documentado; reconstrução compilável ainda em curso.
 
 ## O que é a app
@@ -78,6 +86,12 @@ Ver [`docs/RECOVERY-NOTES.md`](docs/RECOVERY-NOTES.md). Em resumo:
 3. Recriar os ficheiros de build com as versões reais das dependências (lidas de `META-INF/*.version` no APK).
 4. Opcionalmente, usar um decompilador Kotlin (ex.: plugin do IntelliJ) sobre o `@Metadata` para chegar mais perto do fonte original.
 
-## Aviso
+## Sucessão e aviso
 
-Este trabalho é de **preservação de software abandonado**. Usa-o com respeito pelos direitos do autor original: se o projeto reaparecer ou tiver licença conhecida, atribui e segue essa licença.
+Este repositório assume a sucessão do **SonixLink original** (autor inferido: Mattia Doronzo /
+`com.mattiadoronzo`), hoje desaparecido da internet. A continuação é feita a partir do APK v1.2
+recuperado — não de uma cópia autorizada do fonte.
+
+É um trabalho de **preservação de software abandonado**. Usa-o com respeito pelos direitos do
+autor original: se o projeto reaparecer ou a licença original for encontrada, atribui e segue
+essa licença, e ajusta esta nota de sucessão em conformidade.
