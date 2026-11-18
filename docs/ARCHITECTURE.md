@@ -55,9 +55,8 @@
 - Bluetooth: hosts are represented as `bt:<MAC>`; UUID `8d6e3a52-4c1f-4b7e-9a2d-5f0c7e1b3a90`, RFCOMM channel 22 (with a reflective fallback to channel 22).
 - Timeouts: connection 3 s, read 4 s (60 s for downloads), ping/bye 1.5 s.
 
-## Notes on the decompiled code
+## Notes on the source
 
-- Class/method/field names are intact — the app **was not obfuscated**.
-- The `.java` files contain Kotlin `@Metadata` annotations with the original signatures and source file names.
-- Methods such as `copy$default`, `ComponentN`, `invoke2`, `exchange$default`, etc. are compiler artefacts — they did not exist in the original source.
-- Some imports (e.g. `androidx.constraintlayout.widget.ConstraintLayout`, `androidx.core.app.NotificationCompat`) are only jadx filler constants used inside annotations; remove them during reconstruction.
+The app was not obfuscated, so jadx preserved every class and method name. The rebuild does not use that output. It uses the original Kotlin sources (27 `.kt` files) recovered from https://github.com/bill-kolokithas/sonixlink-app, which give us the real comments, names, formatting and Gradle setup. The decompiled output stays in the recovery folder as evidence and for cross-checks.
+
+The compiled APK matches the recovered original: identical manifest and four dex files at matching sizes.

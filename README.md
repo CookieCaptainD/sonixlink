@@ -6,9 +6,13 @@
 >
 > The original author has not endorsed this repo. We found no open-source license for the Android app, so the original author keeps rights to the original code, artwork and documentation. If the original project or its license reappears, update the attribution and license here.
 >
-> Status: original Kotlin source recovered from mirrors; rebuild in progress.
+> Status: original Kotlin source recovered from mirrors and rebuilt into a debug APK.
 
-**At a glance:** a community preservation effort for an abandoned Android remote-control app. The original Kotlin source, protocol docs and a rebuild live here.
+**At a glance:** a community preservation effort for an abandoned Android remote-control app. The original Kotlin source, protocol docs and a working rebuild live here.
+
+## Download
+
+Grab the rebuilt [v1.2-recovered APK](https://github.com/CookieCaptainD/sonixlink/releases/tag/v1.2-recovered) from the releases page, or build `app-debug.apk` from this repo with `./gradlew assembleDebug`.
 
 ## What the app is
 
@@ -81,15 +85,16 @@ The `sonixlink` SharedPreferences file stores the last host and port, index and 
 
 ## Limits
 
-- The player and server code sit outside this repo. The protocol comes from the client and from server code in the successor player project. We have no live player to test against.
-- The mirror marks its build `versionCode` 2; the recovered APK says 3. The rebuild sets 3 to match the APK.
+- The player and server code sit outside this repo. We took the protocol from the client and from the successor player, and we tested no live player.
+- The mirror says `versionCode` 2. The recovered APK says 3, so the rebuild sets 3.
 - We have no license grant for the original Android app.
+- The rebuilt APK matches the original manifest byte for byte and carries the same four dex files at matching sizes. A live device run remains the only full verification.
 
 ## Next steps
 
-1. Build and publish a debug APK from the recovered Kotlin source.
-2. Check every endpoint in [`docs/PROTOCOL.md`](docs/PROTOCOL.md) against a live player when one is available.
-3. Ask the original author about the license and about official succession.
+1. Install the rebuilt APK and test every endpoint in [`docs/PROTOCOL.md`](docs/PROTOCOL.md) against a live player.
+2. Ask the original author about a license and about official succession.
+3. Fold any fixes from that testing into a later release.
 
 ## Succession and disclaimer
 
