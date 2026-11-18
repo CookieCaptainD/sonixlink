@@ -1,63 +1,63 @@
-# Arquitetura (reconstruída a partir do bytecode)
+# Architecture (reconstructed from bytecode)
 
-## Camadas
+## Layers
 
 ```
- Activities / UI                 Dados / Estado              Comunicação
+ Activities / UI                 Data / State                Communication
  ─────────────────────────────────────────────────────────────────────────
  ConnectActivity  (launcher)    Settings (SharedPrefs)      Discovery
- SyncActivity                  Library  (índice local)      ├─ mDNS  _sonixlink._tcp.
- MainActivity                   Covers   (cache de capas)    └─ UDP   7801 / "SONIXLINK1"
+ SyncActivity                  Library  (local index)       ├─ mDNS  _sonixlink._tcp.
+ MainActivity                   Covers   (cover cache)       └─ UDP   7801 / "SONIXLINK1"
  NowPlayingActivity             PlayerInfo / PlayerState    Transport (interface)
  SearchActivity                 Row / Section / Folder       ├─ HttpTransport  (host:7800)
  QueueActivity                  QueueWindow / Playmark       └─ BluetoothTransport (RFCOMM 22)
- BrowseFragment                 SortPrefs / PlayMode         PlayerClient (fachada /api)
+ BrowseFragment                 SortPrefs / PlayMode         PlayerClient (/api facade)
  VolumePill / RowAdapter        Session / PriorityGate       Response
  PlayerService (foreground)     CrashLog
 ```
 
-## Fluxo típico
+## Typical flow
 
-1. `SonixLinkApp.onCreate()` instala `CrashLog`.
-2. `ConnectActivity` usa `Discovery` para encontrar players (mDNS + beacon UDP) ou lista dispositivos Bluetooth emparelhados; `Settings.rememberHost()` guarda o último `host:porta`.
-3. `SyncActivity` compara os "stamps" (hash/mtime) locais com `/api/info` e descarrega `/api/db` e as capas quando mudaram.
-4. `MainActivity`, `SearchActivity`, `QueueActivity`, `NowPlayingActivity` usam `PlayerClient` para estado, navegação e comandos; `PlayerService` mantém a sessão de reprodução em primeiro plano e notificações.
-5. `BrowseFragment` / `RowAdapter` constroem listas a partir do índice local (`Library`).
+1. `SonixLinkApp.onCreate()` installs `CrashLog`.
+2. `ConnectActivity` uses `Discovery` to find players (mDNS + UDP beacon) or lists paired Bluetooth devices; `Settings.rememberHost()` stores the last `host:port`.
+3. `SyncActivity` compares local "stamps" (hash/mtime) with `/api/info` and downloads `/api/db` and covers when they changed.
+4. `MainActivity`, `SearchActivity`, `QueueActivity` and `NowPlayingActivity` use `PlayerClient` for state, browsing and commands; `PlayerService` keeps the playback session in the foreground with notifications.
+5. `BrowseFragment` / `RowAdapter` build lists from the local index (`Library`).
 
-## Ficheiros por responsabilidade
+## Files by responsibility
 
-| Ficheiro | Papel |
+| File | Role |
 |---|---|
-| `SonixLinkApp.kt` | Application; instala crash logging |
-| `ConnectActivity.kt` | Escolha do player (Wi-Fi/Bluetooth) |
-| `SyncActivity.kt` | Descarga do índice e capas, com progresso |
-| `MainActivity.kt` | Ecrã principal; liga estado → UI |
-| `NowPlayingActivity.kt` | Reprodução, capa, volume, favoritos |
-| `SearchActivity.kt` | Pesquisa na biblioteca |
-| `QueueActivity.kt` | Fila, histórico, paginação |
-| `BrowseFragment.kt` | Navegação por pastas/categorias |
-| `PlayerService.kt` | Foreground service de media playback |
-| `PlayerClient.kt` | Cliente HTTP/Bluetooth da API `/api/*` |
-| `Transport.kt`, `HttpTransport.kt`, `BluetoothTransport.kt` | Camada de transporte |
-| `Discovery.kt` | mDNS + beacon UDP |
-| `PlayerInfo.kt`, `PlayerState.kt`, ... | Modelos de dados (ficheiro original `Models.kt`) |
-| `Library.kt`, `Covers.kt`, `Artwork.kt`, `Thumb.kt` | Índice local e cache de imagens |
-| `Settings.kt` | Preferências (`sonixlink`) |
-| `Session.kt`, `PriorityGate.kt`, `Held.kt` | Concorrência/sessão |
-| `CrashLog.kt` | Apanha exceções e mostra diálogo de crash |
-| `databinding/*` | Classes geradas pelo Android Data Binding |
+| `SonixLinkApp.kt` | Application; installs crash logging |
+| `ConnectActivity.kt` | Player selection (Wi-Fi/Bluetooth) |
+| `SyncActivity.kt` | Downloads the index and covers, with progress |
+| `MainActivity.kt` | Main screen; binds state to the UI |
+| `NowPlayingActivity.kt` | Playback, cover art, volume, favourites |
+| `SearchActivity.kt` | Library search |
+| `QueueActivity.kt` | Queue, history, pagination |
+| `BrowseFragment.kt` | Folder/category browsing |
+| `PlayerService.kt` | Media playback foreground service |
+| `PlayerClient.kt` | HTTP/Bluetooth client for the `/api/*` endpoints |
+| `Transport.kt`, `HttpTransport.kt`, `BluetoothTransport.kt` | Transport layer |
+| `Discovery.kt` | mDNS + UDP beacon discovery |
+| `PlayerInfo.kt`, `PlayerState.kt`, ... | Data models (original source file `Models.kt`) |
+| `Library.kt`, `Covers.kt`, `Artwork.kt`, `Thumb.kt` | Local index and image cache |
+| `Settings.kt` | Preferences (`sonixlink`) |
+| `Session.kt`, `PriorityGate.kt`, `Held.kt` | Concurrency/session handling |
+| `CrashLog.kt` | Catches exceptions and shows a crash dialog |
+| `databinding/*` | Classes generated by Android Data Binding |
 
-## Detalhes de rede
+## Network details
 
-- Porta HTTP padrão: **7800**; beacon UDP: **7801**.
+- Default HTTP port: **7800**; UDP beacon port: **7801**.
 - NSD service type: `_sonixlink._tcp.`.
-- Prefixo de beacon: `SONIXLINK1`.
-- Bluetooth: host representado como `bt:<MAC>`; UUID `8d6e3a52-4c1f-4b7e-9a2d-5f0c7e1b3a90`, canal RFCOMM 22 (com fallback reflexivo para canal 22).
-- Timeouts: ligação 3 s, leitura 4 s (60 s para downloads), ping/bye 1,5 s.
+- Beacon prefix: `SONIXLINK1`.
+- Bluetooth: hosts are represented as `bt:<MAC>`; UUID `8d6e3a52-4c1f-4b7e-9a2d-5f0c7e1b3a90`, RFCOMM channel 22 (with a reflective fallback to channel 22).
+- Timeouts: connection 3 s, read 4 s (60 s for downloads), ping/bye 1.5 s.
 
-## Notas sobre o código descompilado
+## Notes on the decompiled code
 
-- Os nomes de classe/método/campo estão intactos — a app **não foi ofuscada**.
-- Os ficheiros `.java` contêm anotações `@Metadata` do Kotlin com os nomes originais, incluindo o ficheiro de origem (ex.: `Models.kt`, `Transport.kt`).
-- Métodos `copy$default`, `ComponentN`, `invoke2`, `exchange$default`, etc. são artefactos do compilador Kotlin — não existiam no fonte original.
-- Alguns imports (ex.: `androidx.constraintlayout.widget.ConstraintLayout`, `androidx.core.app.NotificationCompat`) são apenas "preenchimento" de constantes usadas pelo jadx nas anotações; devem ser removidos na reconstrução.
+- Class/method/field names are intact — the app **was not obfuscated**.
+- The `.java` files contain Kotlin `@Metadata` annotations with the original signatures and source file names.
+- Methods such as `copy$default`, `ComponentN`, `invoke2`, `exchange$default`, etc. are compiler artefacts — they did not exist in the original source.
+- Some imports (e.g. `androidx.constraintlayout.widget.ConstraintLayout`, `androidx.core.app.NotificationCompat`) are only jadx filler constants used inside annotations; remove them during reconstruction.
