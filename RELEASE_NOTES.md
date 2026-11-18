@@ -24,7 +24,7 @@ This release rebuilds SonixLink, the Android remote control that Mattia Doronzo 
 | Field | Value |
 |---|---|
 | File | `app-debug.apk` (6.1 MB) |
-| SHA-256 | `ea978b4a468d195170c2a8606948499bf27e1339df63c5ab22b7ca9354e76e34` |
+| SHA-256 | `2f6cae8ef824c4c1c56ea17e3bae0ff32a4f541ec42a5cddb4e1c99ff316a35b` |
 | Manifest | Identical to the recovered APK |
 | Dex files | `classes.dex` (10,215,948 B), `classes2.dex` (491,692 B), `classes3.dex` (17,528 B), `classes4.dex` (480,824 B) |
 
