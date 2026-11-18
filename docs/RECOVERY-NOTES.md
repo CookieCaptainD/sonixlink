@@ -33,6 +33,24 @@ We found no LICENSE file in the app mirrors and no license section in their READ
 
 The APK cannot supply comments, local variable names, original formatting or the server-side implementation. Those limits no longer block the rebuild because the original source turned up in mirrors. They remain relevant for anyone who only has the APK.
 
+## Reproducing the build
+
+Use JDK 17 and the Android SDK with platform 34 and build-tools 34.0.0:
+
+```bash
+export JAVA_HOME=/path/to/jdk17
+export ANDROID_HOME=/path/to/android-sdk
+./gradlew clean assembleDebug --no-daemon
+```
+
+The APK lands in `app/build/outputs/apk/debug/app-debug.apk`. Point `sdk.dir` at the SDK in `local.properties` if Android Studio is not installed.
+
+On aarch64 hosts, AGP ships an x86_64 `aapt2` that fails under a broken FEX dispatcher. Run the SDK `aapt2` through `qemu-x86_64-static` with an x86_64 sysroot and set `android.aapt2FromMavenOverride` in `~/.gradle/gradle.properties` to that wrapper. This setting stays outside the repo. The coordinator used this route on 2026-11-18.
+
+The build changes one line of the original source: `versionCode` goes from 2 to 3 to match the APK. Everything else comes from the mirror unchanged.
+
+`aapt dump badging` output matches the recovered APK byte for byte. Both APKs contain four dex files with about 114,293 strings each. The sorted string diff spans five lines in a generated class-hash map; app strings and protocol identifiers match.
+
 ## Verification checklist
 
 1. Compare the rebuilt APK with the recovered APK: package, version, strings and API paths.

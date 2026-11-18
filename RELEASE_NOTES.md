@@ -35,6 +35,20 @@ This release rebuilds SonixLink, the Android remote control that Mattia Doronzo 
 - HTTP API client on port 7800: info, state, commands, queue, browse, search, favourites, playlists, history, index and cover downloads.
 - Local library index and cover cache, six UI screens and a media playback foreground service.
 
+## Build
+
+```bash
+export JAVA_HOME=/path/to/jdk17
+export ANDROID_HOME=/path/to/android-sdk
+./gradlew clean assembleDebug --no-daemon
+```
+
+A clean build succeeds with JDK 17 and Android SDK platform 34 plus build-tools 34.0.0. The build changes one line of the mirror source: `versionCode` goes from 2 to 3. See `docs/RECOVERY-NOTES.md` for the aarch64 `aapt2` workaround used here.
+
+## Verification
+
+`aapt dump badging` output matches the recovered APK byte for byte. Both APKs carry four dex files with about 114,293 strings each. The sorted string diff spans five lines in a generated class-hash map, and the app strings and protocol identifiers match. No method needed stubbing.
+
 ## Limits
 
 - We tested the endpoints against the original README and the player source, not against a live player.
