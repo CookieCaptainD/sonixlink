@@ -99,3 +99,15 @@ The `sonixlink` SharedPreferences file stores the last host and port, index and 
 ## Succession and disclaimer
 
 This repo takes over from the original SonixLink by Mattia Doronzo, now off the internet. We base the rebuild on the recovered v1.2 APK and on community mirrors of the original source. This work preserves abandoned software. If the original project returns or its license turns up, add the proper attribution and license and rewrite this note.
+
+## Edit, 19 November 2026
+
+I created this repo to carry SonixLink forward. The Android app remote-controls a Sonix player over HTTP, Bluetooth or the local network. The original repo is gone. I rebuilt the app from the recovered v1.2 Kotlin source and checked the output against the last APK.
+
+This repo holds the source, the `/api/*` protocol docs and the rebuilt debug APK. The rebuilt manifest matches the recovered APK. Install it on Android 7.0 or newer.
+
+We found no license for the Android app. The original author keeps the rights to the original code, artwork and docs. If the project returns or a license appears, update the attribution here.
+
+Repo: https://github.com/CookieCaptainD/sonixlink
+Release: https://github.com/CookieCaptainD/sonixlink/releases/tag/v1.2-recovered
+
