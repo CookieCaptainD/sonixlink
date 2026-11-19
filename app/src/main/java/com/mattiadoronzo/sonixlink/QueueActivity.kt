@@ -519,10 +519,11 @@ class QueueActivity : AppCompatActivity() {
             }
             val rows = withContext(Dispatchers.IO) {
                 val known = Session.library?.tracksByPaths(page.paths).orEmpty()
-                page.paths.map { path ->
+                page.paths.mapIndexed { i, path ->
+                    val tags = page.tags.getOrNull(i)
                     known[path] ?: Row(
-                        title = path.substringAfterLast('/'),
-                        subtitle = "",
+                        title = tags?.title?.ifEmpty { null } ?: path.substringAfterLast('/'),
+                        subtitle = tags?.artist.orEmpty(),
                         path = path,
                     )
                 }

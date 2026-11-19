@@ -327,6 +327,12 @@ class PlayerClient(val host: String, val port: Int = DEFAULT_PORT) {
         for (i in 0 until (array?.length() ?: 0)) {
             paths.add(array!!.optString(i, ""))
         }
+        val tagArray = json.optJSONArray("tags")
+        val tags = List(tagArray?.length() ?: 0) { i ->
+            tagArray!!.optJSONObject(i)?.let {
+                TrackTags(title = it.optString("title", ""), artist = it.optString("artist", ""))
+            }
+        }
         return QueueWindow(
             count = json.optInt("count", 0),
             position = json.optInt("position", -1),
@@ -334,6 +340,7 @@ class PlayerClient(val host: String, val port: Int = DEFAULT_PORT) {
             paths = paths,
             revision = json.optLong("revision", -1),
             pending = json.optBoolean("pending", false),
+            tags = tags,
         )
     }
 
@@ -554,7 +561,10 @@ data class QueueWindow(
     val revision: Long = -1,
     /** The player has not fetched that stretch yet: ask again. */
     val pending: Boolean = false,
+    val tags: List<TrackTags?> = emptyList(),
 )
+
+data class TrackTags(val title: String, val artist: String)
 
 /** One entry of the player's history: a track as it was when it was played. */
 data class HistoryEntry(

@@ -20,7 +20,7 @@ The client calls an HTTP API on port 7800 or sends the same requests over Blueto
 | GET | `/api/thumbs?keys=<k>,...` | Up to 64 thumbnails: 16-digit key, width and height (u16 LE), length (u32 LE), RGB565 pixels. `0x0` means no art |
 | GET | `/api/covers` | Legacy whole thumbnail store |
 | GET | `/api/art?path=&max=` | Raw artwork. 202 while rendering |
-| GET | `/api/queue[?from=n]` | Queue page: `count`, `position`, `first`, `revision`, `pending`, `paths[]` (max 200) |
+| GET | `/api/queue[?from=n]` | Queue page: `count`, `position`, `first`, `revision`, `pending`, `paths[]` (max 200), `tags[]` (beside `paths`, one entry each: `title`, `artist` and `album` of a Tidal, Qobuz or podcast track, which the index does not hold, `null` for the rest; left out when the window holds none of those) |
 | GET | `/api/browse[?path=]` | `{path, root, parent, entries:[{name, path, dir}]}` |
 | GET | `/api/history[?limit=n]` | `{revision, items:[{id, path, title, artist, played_at}]}` |
 | GET | `/api/favourites` | `favourites[{path, name, artist}]` |
